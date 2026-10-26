@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+tests/__artifacts__/
+
+# Local planning notes with household details; not published
+PLAN.md

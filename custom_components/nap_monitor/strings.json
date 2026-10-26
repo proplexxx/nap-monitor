@@ -1,0 +1,17 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up Nap Monitor",
+        "description": "Give your household a name. You will add children, sleep locations and cameras next.",
+        "data": {
+          "name": "Household name"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Nap Monitor is already set up.",
+      "single_instance_allowed": "Nap Monitor is already set up."
+    }
+  }
+}
