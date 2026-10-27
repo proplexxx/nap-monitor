@@ -64,5 +64,29 @@ async def _async_register_frontend(hass: HomeAssistant) -> None:
         [StaticPathConfig(FRONTEND_URL_BASE, str(frontend_path), cache_headers=False)]
     )
     # The version query string busts browser caches on every release.
-    add_extra_js_url(hass, f"{FRONTEND_URL}?v={version}")
-    _LOGGER.debug("Nap Monitor card %s served from %s", version, FRONTEND_URL)
+    url = f"{FRONTEND_URL}?v={version}"
+    # Extra modules arrive with a freshly served page; dashboard resources are fetched
+    # on every dashboard load, which is what a companion app holding a cached app
+    # shell still does. Register both so either path loads the same URL.
+    add_extra_js_url(hass, url)
+    await _async_register_resource(hass, url)
+    _LOGGER.debug("Nap Monitor card %s served from %s", version, url)
+
+
+async def _async_register_resource(hass: HomeAssistant, url: str) -> None:
+    """Add or update the card as a dashboard resource (storage mode only)."""
+    lovelace = hass.data.get("lovelace")
+    resources = getattr(lovelace, "resources", None)
+    if resources is None and isinstance(lovelace, dict):
+        resources = lovelace.get("resources")
+    if resources is None or not hasattr(resources, "async_create_item"):
+        _LOGGER.debug("Dashboard resources are not storage-managed; relying on extra module")
+        return
+    if not getattr(resources, "loaded", True):
+        await resources.async_load()
+    for item in resources.async_items():
+        if str(item.get("url", "")).startswith(FRONTEND_URL):
+            if item["url"] != url:
+                await resources.async_update_item(item["id"], {"url": url})
+            return
+    await resources.async_create_item({"res_type": "module", "url": url})

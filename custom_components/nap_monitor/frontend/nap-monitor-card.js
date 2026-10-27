@@ -1675,7 +1675,7 @@ window.customCards.push({
   preview: !1
 });
 console.info(
-  "%c NAP-MONITOR-CARD %c 0.1.0 ",
+  "%c NAP-MONITOR-CARD %c 0.1.1 ",
   "color: #181b22; background: #8fd3a7; font-weight: 700",
   "color: #8fd3a7; background: #181b22"
 );

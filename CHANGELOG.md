@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1
+
+- The integration now also registers the card as a dashboard resource (storage mode),
+  so companion apps holding a cached app shell still load it. The extra-module
+  registration stays as the fallback for YAML-mode resources.
+
 ## 0.1.0 — phase 0 (unreleased)
 
 - Repository, TypeScript build and CI set up.
