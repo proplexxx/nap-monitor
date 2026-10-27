@@ -1,6 +1,5 @@
 {
   "name": "Nap Monitor",
   "render_readme": true,
-  "homeassistant": "2025.3.0",
-  "hide_default_branch": true
+  "homeassistant": "2025.3.0"
 }
